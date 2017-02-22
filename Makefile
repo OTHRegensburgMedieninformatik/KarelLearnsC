@@ -52,7 +52,6 @@ $(BUILD):
 	@echo "Build Directories"
 	@mkdir -p $(BUILD)
 
-
 # ***************************************************************
 # Library compilations
 
@@ -123,6 +122,32 @@ clion_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@cp -r build/$(PLATFORM)/assets StarterProject/assets
 	@cp -r build/$(PLATFORM)/data StarterProject/data
 	@echo "Check the StarterProject folder"
+
+codeblocks_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
+	@echo "Build StarterProject for CodeBlocks on Windows";
+	@rm -rf StarterProject
+	@cp -r ide/codeblocks/windows StarterProject
+	@cp -r build/$(PLATFORM)/include StarterProject/include
+	@cp -r build/$(PLATFORM)/lib StarterProject/lib
+	@cp -r build/$(PLATFORM)/assets StarterProject/assets
+	@cp -r build/$(PLATFORM)/data StarterProject/data
+	@echo "Check the StarterProject folder"
+
+starterprojects: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
+	@echo "Build StarterProjects"
+	@rm -rf StarterProjects
+	@cp -r ide StarterProjects
+	@echo "Build StarterProject for Clion on Windows"
+	@cp -r build/$(PLATFORM)/include StarterProjects/clion/windows/include
+	@cp -r build/$(PLATFORM)/lib StarterProjects/clion/windows/lib
+	@cp -r build/$(PLATFORM)/assets StarterProjects/clion/windows/assets
+	@cp -r build/$(PLATFORM)/data StarterProjects/clion/windows/data
+	@echo "Build StarterProject for CodeBlocks on Windows"
+	@cp -r build/$(PLATFORM)/include StarterProjects/codeblocks/windows/include
+	@cp -r build/$(PLATFORM)/lib StarterProjects/codeblocks/windows/lib
+	@cp -r build/$(PLATFORM)/assets StarterProjects/codeblocks/windows/assets
+	@cp -r build/$(PLATFORM)/data StarterProjects/codeblocks/windows/data
+	@echo "Check the StarterProjects folder"
 
 # ***************************************************************
 # Standard entries to remove files from the directories
