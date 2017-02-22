@@ -1,6 +1,6 @@
 # README - KarelC #
 
-## What is this repository for? ###
+### What is this repository for? ###
 
 * This is an implementation of Karel the Robot in the C programming language. Karel can be used in introductory programming courses in order to lower barriers of entry for beginners. Karel focuses on problem solving from the beginning, while hiding programming language specific complexities from students. At the same time, Karel attempts to "feel real" by including required header files and being integrated into an IDE.
 * KarelC should be compiled as a static library. Students can then write their own Karel programs, which can then be linked against the static library.
@@ -9,10 +9,6 @@
 * Supported platforms: Windows
 * 1.0
 * Note: This is a very first rough and sketchy draft of the documentation
-
-
-## Old Section
-All information below ist for the folder old
 
 ### How do I get set up? ###
 To compile the static library, carry out the following steps:
@@ -56,39 +52,3 @@ For Codeblocks, there is already a prebuilt and configured version of KarelC ava
 * Open Codeblocks Project File (Karel.cbp)
 * Compile, Run
 * Edit your program and have fun
-
-## New Section
-
-### Build the Karrel Library
-to bild the Karrel Library simply run:
-
-```
-make 
-```
-
->The generated files are stored in the build directory
-
-### Create StartProject
-The library comes with a StartProject for Clion that have all needed files included.
-
-The StartProject can be created with one of the following commands
-
->IDE = [ "clion", "codeblocks"] \
->PLATFORM = ["windows"] 
->
->make IDE_PLATFORM
-
-```
-make clion_windows
-```
->And is located in StartProject
-
-Additional you can also build all StarterProjects with
-
-```
- make starterprojects
-```
-## TODO
-
-* Bug fixing
-
