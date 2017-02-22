@@ -12,7 +12,7 @@
 
 
 ## Old Section
-All information below ist for the forlder old
+All information below ist for the folder old
 
 ### How do I get set up? ###
 To compile the static library, carry out the following steps:
