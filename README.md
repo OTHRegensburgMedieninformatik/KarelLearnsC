@@ -69,7 +69,10 @@ make
 >The generated files are stored in the build directory
 
 ### Create StartProject
-The library comes with a StartProject for Clion that have all needed files included.
+The library comes with a StartProject for Clion and Codeblocks that have all needed files included.
+
+>Hint Clion needed as separated build script. It is located in the StarterProject folder. 
+>Please run "build.bat" befor you open it in Clion
 
 The StartProject can be created with one of the following commands
 
