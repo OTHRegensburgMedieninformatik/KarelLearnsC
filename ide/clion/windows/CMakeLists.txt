@@ -3,7 +3,7 @@ project(StarterProject)
 
 set(CMAKE_C_STANDARD 11)
 
-set(SOURCE_FILES HalloKarel.c)
+set(SOURCE_FILES HelloKarel.c)
 
 # Include Directories
 include_directories("include")
