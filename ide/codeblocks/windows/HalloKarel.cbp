@@ -43,6 +43,52 @@
 		<Unit filename="HalloKarel.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="data/worlds/1x8.w" />
+		<Unit filename="data/worlds/3x5.w" />
+		<Unit filename="data/worlds/40x40.w" />
+		<Unit filename="data/worlds/6x5.w" />
+		<Unit filename="data/worlds/7x7.w" />
+		<Unit filename="data/worlds/8x1.w" />
+		<Unit filename="data/worlds/8x8.w" />
+		<Unit filename="data/worlds/BeeperPicking.w" />
+		<Unit filename="data/worlds/ClimbTwoPyramidsKarel.w" />
+		<Unit filename="data/worlds/DamagedPillar1.w" />
+		<Unit filename="data/worlds/DamagedPillar2.w" />
+		<Unit filename="data/worlds/DeathValley.w" />
+		<Unit filename="data/worlds/DiamondMining1.w" />
+		<Unit filename="data/worlds/DiamondMining2.w" />
+		<Unit filename="data/worlds/FindBeeperCenter1.w" />
+		<Unit filename="data/worlds/FindBeeperCenter2.w" />
+		<Unit filename="data/worlds/FindBeeperCenter3.w" />
+		<Unit filename="data/worlds/HugeCave.w" />
+		<Unit filename="data/worlds/LargeHall.w" />
+		<Unit filename="data/worlds/LivingRoom.w" />
+		<Unit filename="data/worlds/MediumCave.w" />
+		<Unit filename="data/worlds/MediumHall.w" />
+		<Unit filename="data/worlds/SmallCave.w" />
+		<Unit filename="data/worlds/SmallCaveTest.w" />
+		<Unit filename="data/worlds/SmallHall.w" />
+		<Unit filename="data/worlds/SteepSteepleChase.w" />
+		<Unit filename="data/worlds/SteepleChase.w" />
+		<Unit filename="data/worlds/flagDistance0.w" />
+		<Unit filename="data/worlds/flagDistance1.w" />
+		<Unit filename="data/worlds/flagDistance2.w" />
+		<Unit filename="data/worlds/placeFlag.w" />
+		<Unit filename="data/worlds/test.txt" />
+		<Unit filename="data/worlds/worldArea0.w" />
+		<Unit filename="data/worlds/worldArea1.w" />
+		<Unit filename="data/worlds/worldArea3.w" />
+		<Unit filename="include/config.h" />
+		<Unit filename="include/cursor.h" />
+		<Unit filename="include/draw.h" />
+		<Unit filename="include/font.h" />
+		<Unit filename="include/graphicsManager.h" />
+		<Unit filename="include/init.h" />
+		<Unit filename="include/input.h" />
+		<Unit filename="include/karel.h" />
+		<Unit filename="include/main.h" />
+		<Unit filename="include/structs.h" />
+		<Unit filename="include/world.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
