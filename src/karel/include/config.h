@@ -1,10 +1,20 @@
+#ifndef WINDOWS_BUILD
+#define WINDOWS_BUILD 0
+#endif // WINDOWS_BUILD
+#ifndef LINUX_BUILD
+#define LINUX_BUILD 1
+#endif // LINUX_BUILD
+#ifndef Null
+#define Null 0
+#endif // Null
+
+#if BUILD == WINDOWS_BUILD
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
-//#include <stdio.h>
-#include <string.h>
-//#include <stdlib.h>
 #include <errno.h>
+#endif // WINDOWS_BUILD
+#include <string.h>
 
 #define WALL "Wall"
 #define WEST_LOWER "west"
@@ -84,7 +94,3 @@
 #define ENTITY_KAREL 15
 #define ENTITY_MARKER 16
 #define ENTITY_BORDER 17
-
-
-
-

@@ -1,11 +1,20 @@
 #include "world.h"
-#include "draw.h"
 #include "config.h"
 #include "structs.h"
 
+#if BUILD == WINDOWS_BUILD
+#include "draw.h"
+#endif // WINDOWS_BUILD
+
+#if BUILD == LINUX_BUILD
+#include <stdio.h>
+#endif // LINUX_BUILD
+
+#if BUILD == WINDOWS_BUILD
 extern void drawBeeperImage(SDL_Surface *, int, int, int);
 extern void drawPixelOnScreen(int positionX, int positionY, int entity,
                               int A_KAREL_STEP);
+#endif // WINDOWS_BUILD
 int readYvalue(char singleLine[150], int index);
 int readXvalue(char singleLine[150], int index);
 int readSpeedValue(char singleLine[150], int index);
@@ -29,7 +38,12 @@ void loadWorld(char *name)
     int x, y;
 
     FILE *filePointer;
+    #if BUILD == WINDOWS_BUILD
     char *path = "data/worlds/";
+    #endif // WINDOWS_BUILD
+    #if BUILD == LINUX_BUILD
+    char *path = "/usr/include/data/worlds/";
+    #endif // LINUX_BUILD
     char *ending = ".w";
 
     char *file = (char *) malloc(1 + strlen(path) + strlen(name) + strlen(ending));
@@ -42,7 +56,7 @@ void loadWorld(char *name)
     filePointer = fopen(file, "r");
     char singleLine[MAX];
 
-    if (filePointer == NULL)
+    if (filePointer == Null)
     {
         printf("Failed to open world %s\n", name);
         exit(1);
@@ -327,8 +341,10 @@ void loadWorld(char *name)
         }
     }
     world.filename = name;
+    #if BUILD == WINDOWS_BUILD
     loadImages();
     prepareKarel();
+    #endif // WINDOWS_BUILD
 }
 int readXvalue(char singleLine[150], int index)
 {
@@ -430,6 +446,7 @@ int karelForDirection(char singleLine[150], char *direction)
     return (strstr(singleLine, KAREL) && (strstr(singleLine, direction)));
 }
 
+#if BUILD == WINDOWS_BUILD
 void drawWorld()
 {
     int row, column;
@@ -472,6 +489,7 @@ void drawWorld()
     }
 }
 
+
 drawBeeperAmount(WorldInformation worldPart)
 {
     if (worldPart.beeper > 1) //only draw, when more then one
@@ -503,4 +521,5 @@ drawBeeperAmount(WorldInformation worldPart)
     }
 
 }
+#endif // WINDOWS_BUILD
 

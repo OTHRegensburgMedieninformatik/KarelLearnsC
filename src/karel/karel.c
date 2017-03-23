@@ -1,31 +1,39 @@
 #include "karel.h"
+#if BUILD == WINDOWS_BUILD
 #include "graphicsManager.h"
+#endif // WINDOWS_BUILD
+#if BUILD == LINUX_BUILD
+#include <stdio.h>
+#endif // LINUX_BUILD
 
+#if BUILD == WINDOWS_BUILD
 SDL_Surface* rotatedKarel;
 void removeFromScreen();
-int error = 0;
+#endif // WINDOWS_BUILD
 
 void initKarel()
 {
-
     karel.x = world.karelStartX;
     karel.y = world.karelStartY;
 
+    #if BUILD == WINDOWS_BUILD
     karel.width = karelRightImage->w;
     karel.height = karelRightImage->h;
+    #endif // WINDOWS_BUILD
+    karel.error = 0;
 }
 
 void move()
 {
-    if(error != 1)
+    if(karel.error != 1)
     {
         if (world.speed < 1)
         {
             world.speed = 1;
         }
-
+       #if BUILD == WINDOWS_BUILD
         int frameLimit = SDL_GetTicks() + DELAY / (world.speed * 2);
-
+       #endif // WINDOWS_BUILD
         if (frontIsClear())
         {
 
@@ -48,37 +56,40 @@ void move()
                 karel.x += 1;
                 break;
             }
-
+       #if BUILD == WINDOWS_BUILD
             delay(frameLimit);
-
+       #endif // WINDOWS_BUILD
         }
         else
         {
-            error = 1;
-            //SDL_Quit();
+       karel.error = 1;
         }
     }
-
+       #if BUILD == WINDOWS_BUILD
     draw();
-
+       #endif // WINDOWS_BUILD
 }
 
 void turnLeft()
 {
-    if(error != 1)
+    if(karel.error != 1)
     {
         if (world.speed < 1)
         {
             world.speed = 1;
         }
-        SDL_Delay(500/ (world.speed * 2));
+        #if BUILD == WINDOWS_BUILD
+            SDL_Delay(500/ (world.speed * 2));
+        #endif // WINDOWS_BUILD
         if (world.angle == 360)
         {
             world.angle = 0;
         }
         world.angle += A_LEFT_TURN;
-        draw();
-        SDL_Delay(500/ (world.speed * 2));
+        #if BUILD == WINDOWS_BUILD
+            draw();
+            SDL_Delay(500/ (world.speed * 2));
+        #endif // WINDOWS_BUILD
     }
 }
 
@@ -91,7 +102,7 @@ int frontIsClear()
     {
     case (DIRECTION_RIGHT):
 
-        if (karel.x + 1 != NULL)
+        if (karel.x + 1 != Null)
         {
             frontIsClear = world.worldInformation[karel.x][karel.y].wallRight
                            || world.worldInformation[karel.x + 1][karel.y].wallLeft;
@@ -104,7 +115,7 @@ int frontIsClear()
         break;
     case (DIRECTION_UP):
 
-        if (karel.y - 1 != NULL)
+        if (karel.y - 1 != Null)
         {
             frontIsClear = world.worldInformation[karel.x][karel.y].wallTop
                            || world.worldInformation[karel.x][karel.y - 1].wallBottom;
@@ -117,7 +128,7 @@ int frontIsClear()
         break;
     case (DIRECTION_LEFT):
 
-        if (karel.x - 1 != NULL)
+        if (karel.x - 1 != Null)
         {
             frontIsClear = world.worldInformation[karel.x][karel.y].wallLeft
                            || world.worldInformation[karel.x - 1][karel.y].wallRight;
@@ -130,7 +141,7 @@ int frontIsClear()
 
         break;
     case (DIRECTION_DOWN):
-        if (karel.y + 1 != NULL)
+        if (karel.y + 1 != Null)
         {
             frontIsClear = world.worldInformation[karel.x][karel.y].wallBottom
                            || world.worldInformation[karel.x][karel.y + 1].wallTop;
@@ -142,7 +153,7 @@ int frontIsClear()
         }
         break;
     case (DIRECTION_RIGHT_360):
-        if (karel.x + 1 != NULL)
+        if (karel.x + 1 != Null)
         {
             frontIsClear = world.worldInformation[karel.x][karel.y].wallRight
                            || world.worldInformation[karel.x + 1][karel.y].wallLeft;
@@ -163,38 +174,49 @@ int frontIsBlocked()
 
 void pickBeeper()
 {
-    if(error != 1)
+    if(karel.error != 1)
     {
         if (world.worldInformation[karel.x][karel.y].beeper)
         {
-            SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+            #if BUILD == WINDOWS_BUILD
+                SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+            #endif // WINDOWS_BUILD
             world.beeperBag++;
             if (world.worldInformation[karel.x][karel.y].beeper >= INFINITE_BEEPERS)
                 return;
-
-            if ((--world.worldInformation[karel.x][karel.y].beeper) == 0)
-                removeFromScreen(ENTITY_BEEPER);
-            draw();
-            SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+            #if BUILD == WINDOWS_BUILD
+                if ((--world.worldInformation[karel.x][karel.y].beeper) == 0)
+                    removeFromScreen(ENTITY_BEEPER);
+                draw();
+                SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+            #endif // WINDOWS_BUILD
         }
         else
         {
-            error = 1;
+            karel.error = 1;
+            #if BUILD == WINDOWS_BUILD
+                draw();
+            #endif // WINDOWS_BUILD
+
         }
     }
 }
 
 void putBeeper()
 {
-    if(error != 1)
+    if(karel.error != 1)
     {
         if (world.beeperBag <= 0)
         {
-            error = 1;
+            karel.error = 1;
+            #if BUILD == WINDOWS_BUILD
+                draw();
+            #endif // WINDOWS_BUILD
             return;
         }
-
-        SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+        #if BUILD == WINDOWS_BUILD
+            SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+        #endif // WINDOWS_BUILD
         if (world.beeperBag >= INFINITE_BEEPERS)
         {
             if (world.worldInformation[karel.x][karel.y].beeper < INFINITE_BEEPERS)
@@ -214,8 +236,10 @@ void putBeeper()
                 world.worldInformation[karel.x][karel.y].beeper += 1;
             }
         }
-        draw();
-        SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+        #if BUILD == WINDOWS_BUILD
+            draw();
+            SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
+        #endif // WINDOWS_BUILD
     }
 }
 
@@ -248,7 +272,7 @@ int rightIsClear()
     {
     case (DIRECTION_RIGHT):
 
-        if(karel.y + 1 != NULL)
+        if(karel.y + 1 != Null)
         {
             rightIsClear = world.worldInformation[karel.x][karel.y].wallBottom
                            || world.worldInformation[karel.x][karel.y + 1].wallTop;
@@ -262,7 +286,7 @@ int rightIsClear()
         break;
     case (DIRECTION_UP):
 
-        if (karel.x + 1 != NULL)
+        if (karel.x + 1 != Null)
         {
             rightIsClear = world.worldInformation[karel.x][karel.y].wallRight
                            || world.worldInformation[karel.x + 1][karel.y].wallLeft;
@@ -274,7 +298,7 @@ int rightIsClear()
         break;
     case (DIRECTION_LEFT):
 
-        if (karel.y - 1 != NULL)
+        if (karel.y - 1 != Null)
         {
             rightIsClear = world.worldInformation[karel.x][karel.y].wallTop
                            || world.worldInformation[karel.x][karel.y - 1].wallBottom;
@@ -287,7 +311,7 @@ int rightIsClear()
 
         break;
     case (DIRECTION_DOWN):
-        if (karel.x - 1 != NULL)
+        if (karel.x - 1 != Null)
         {
             rightIsClear = world.worldInformation[karel.x][karel.y].wallLeft
                            || world.worldInformation[karel.x - 1][karel.y].wallRight;
@@ -299,7 +323,7 @@ int rightIsClear()
         break;
     case (DIRECTION_RIGHT_360):
 
-        if(karel.y + 1 != NULL)
+        if(karel.y + 1 != Null)
         {
             rightIsClear = world.worldInformation[karel.x][karel.y].wallBottom
                            || world.worldInformation[karel.x][karel.y + 1].wallTop;
@@ -311,18 +335,6 @@ int rightIsClear()
         break;
     }
     return !rightIsClear;
-//    int rightIsClear;
-//    if (karel.x + 1 != NULL)
-//    {
-//        rightIsClear = world.worldInformation[karel.x][karel.y].wallRight
-//                       || world.worldInformation[karel.x + 1][karel.y].wallLeft;
-//    }
-//    else
-//    {
-//
-//        rightIsClear = world.worldInformation[karel.x][karel.y].wallRight;
-//    }
-//    return !rightIsClear;
 }
 
 int rightIsBlocked()
@@ -338,7 +350,7 @@ int leftIsClear()
     {
     case (DIRECTION_RIGHT):
 
-        if(karel.y - 1 != NULL)
+        if(karel.y - 1 != Null)
         {
             leftIsClear = world.worldInformation[karel.x][karel.y].wallTop
                           || world.worldInformation[karel.x][karel.y - 1].wallBottom;
@@ -351,7 +363,7 @@ int leftIsClear()
         break;
     case (DIRECTION_UP):
 
-        if (karel.x - 1 != NULL)
+        if (karel.x - 1 != Null)
         {
             leftIsClear = world.worldInformation[karel.x][karel.y].wallLeft
                           || world.worldInformation[karel.x - 1][karel.y].wallRight;
@@ -363,7 +375,7 @@ int leftIsClear()
         break;
     case (DIRECTION_LEFT):
 
-        if (karel.y - 1 != NULL)
+        if (karel.y - 1 != Null)
         {
             leftIsClear = world.worldInformation[karel.x][karel.y].wallBottom
                           || world.worldInformation[karel.x][karel.y + 1].wallTop;
@@ -375,7 +387,7 @@ int leftIsClear()
 
         break;
     case (DIRECTION_DOWN):
-        if (karel.x + 1 != NULL)
+        if (karel.x + 1 != Null)
         {
             leftIsClear = world.worldInformation[karel.x][karel.y].wallRight
                           || world.worldInformation[karel.x + 1][karel.y].wallLeft;
@@ -386,7 +398,7 @@ int leftIsClear()
         }
         break;
     case (DIRECTION_RIGHT_360):
-        if(karel.y - 1 != NULL)
+        if(karel.y - 1 != Null)
         {
             leftIsClear = world.worldInformation[karel.x][karel.y].wallTop
                           || world.worldInformation[karel.x][karel.y - 1].wallBottom;
@@ -399,18 +411,6 @@ int leftIsClear()
         break;
     }
     return !leftIsClear;
-
-//    if (karel.x - 1 != NULL)
-//    {
-//        leftIsClear = world.worldInformation[karel.x][karel.y].wallLeft
-//                      || world.worldInformation[karel.x - 1][karel.y].wallRight;
-//    }
-//    else
-//    {
-//
-//        leftIsClear = world.worldInformation[karel.x][karel.y].wallLeft;
-//    }
-//    return !leftIsClear;
 }
 
 int leftIsBlocked()
@@ -420,12 +420,15 @@ int leftIsBlocked()
 
 void drawError()
 {
-    if(error)
+    #if BUILD == WINDOWS_BUILD
+    if(karel.error == 1)
     {
         drawErrorImage(errorImage, 0, 0);
     }
+    #endif // WINDOWS_BUILD
 }
 
+#if BUILD == WINDOWS_BUILD
 void drawKarel()
 {
     if(karelIsInitiated())
@@ -450,6 +453,7 @@ void drawKarel()
         }
     }
 }
+#endif // WINDOWS_BUILD
 
 void removeFromScreen(int entity)
 {

@@ -1,3 +1,13 @@
+#ifndef WINDOWS_BUILD
+#define WINDOWS_BUILD 0
+#endif // WINDOWS_BUILD
+#ifndef LINUX_BUILD
+#define LINUX_BUILD 1
+#endif // LINUX_BUILD
+#ifndef Null
+#define Null 0
+#endif // Null
+
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
@@ -29,8 +39,10 @@ typedef struct Karel
 {
 	int width, height, x, y;
 	int angle;
+	int error;
 } Karel;
 
+#if BUILD == WINDOWS_BUILD
 typedef struct Cursor
 {
     int x, y, tileID;
@@ -42,6 +54,7 @@ typedef struct Input
 	int previous, next, load, save;
 	int mouseX, mouseY;
 } Input;
+#endif // WINDOWS_BUILD
 
 #endif /* STRUCTS_H */
 

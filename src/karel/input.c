@@ -65,7 +65,7 @@ void getInput() {
                     			if (isStarted == 0)
                     			{
                         			//run();
-                        			runThread = CreateThread(NULL, 0, runPointer, NULL, 0, NULL);
+                        			runThread = CreateThread(Null, 0, runPointer, Null, 0, Null);
                     			}
 
 					//isStarted = 1;
