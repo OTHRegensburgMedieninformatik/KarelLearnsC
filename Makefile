@@ -23,7 +23,6 @@ BUILD = \
     build/$(PLATFORM)/lib \
     build/$(PLATFORM)/obj 
 
-ifeq ($(OS),Windows_NT)
 OBJECTS = \
 	build/$(PLATFORM)/obj/cursor.o \
 	build/$(PLATFORM)/obj/draw.o \
@@ -34,12 +33,11 @@ OBJECTS = \
 	build/$(PLATFORM)/obj/karel.o \
 	build/$(PLATFORM)/obj/main.o \
 	build/$(PLATFORM)/obj/world.o
-else
-OBJECTS = \
+
+SERVEROBJECTS = \
 	build/$(PLATFORM)/obj/karel.o \
 	build/$(PLATFORM)/obj/main.o \
 	build/$(PLATFORM)/obj/world.o
-endif
 
 LIBRARIES = build/$(PLATFORM)/lib/libKarel.a
 
@@ -62,7 +60,6 @@ $(BUILD):
 # ***************************************************************
 # Library compilations
 
-ifeq ($(OS),Windows_NT)
 build/$(PLATFORM)/obj/cursor.o:
 	@echo "Build curser.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/cursor.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/cursor.c
@@ -98,20 +95,6 @@ build/$(PLATFORM)/obj/main.o:
 build/$(PLATFORM)/obj/world.o: 
 	@echo "Build world.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/world.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/world.c
-
-else
-build/$(PLATFORM)/obj/karel.o: 
-	@echo "Build karel.o"
-	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/karel.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/karel.c -DBUILD=1
-	
-build/$(PLATFORM)/obj/main.o: 
-	@echo "Build main.o"
-	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/main.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/main.c -DBUILD=1
-	
-build/$(PLATFORM)/obj/world.o: 
-	@echo "Build world.o"
-	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/world.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/world.c -DBUILD=1
-endif
 
 #build/$(PLATFORM)/obj/exception.o: c/src/exception.c c/include/cslib.h \
 #                 c/include/exception.h c/include/strlib.h \
@@ -155,13 +138,27 @@ codeblocks_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@cp -r build/$(PLATFORM)/data StarterProject/data
 	@echo "Check the StarterProject folder"
 
-praktomat:
-	@cp /usr/include/KarelLearnsC/build/unixlike/lib/libKarel.a /usr/include/
-	@cp /usr/include/KarelLearnsC/src/karel/include/config.h /usr/include/
-	@cp /usr/include/KarelLearnsC/src/karel/include/karel.h /usr/include/
-	@cp /usr/include/KarelLearnsC/src/karel/include/main.h /usr/include/
-	@cp /usr/include/KarelLearnsC/src/karel/include/structs.h /usr/include/
-	@cp /usr/include/KarelLearnsC/src/karel/include/world.h /usr/include/
+linux_server:
+	@echo "Build Directories"
+	@mkdir -p $(BUILD)
+	@echo "Build karel.o"
+	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/karel.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/karel.c -DBUILD=1
+	@echo "Build main.o"
+	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/main.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/main.c -DBUILD=1
+	@echo "Build world.o"
+	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/world.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/world.c -DBUILD=1
+	
+	@echo "Build libKarel.a"
+	@-rm -f build/$(PLATFORM)/lib/libKarel.a
+	@ar crs build/$(PLATFORM)/lib/libKarel.a $(SERVEROBJECTS)
+	@ranlib build/$(PLATFORM)/lib/libKarel.a
+
+	@cp -r build/$(PLATFORM)/lib/libKarel.a /usr/include
+	@cp -r src/karel/include/config.h /usr/include
+	@cp -r src/karel/include/karel.h /usr/include
+	@cp -r src/karel/include/main.h /usr/include
+	@cp -r src/karel/include/structs.h /usr/include
+	@cp -r src/karel/include/world.h /usr/include
 
 starterprojects: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@echo "Build StarterProjects"

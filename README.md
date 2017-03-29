@@ -45,19 +45,14 @@ Additionally all starter projects can be built at once with
  make starterprojects
 ```
 
-### Create server library for Praktomat (Unix only)
-The library can also be builded as a gui-less server library for Praktomat. The KarelLearnsC project has to be built on the target server in order to run properly.
-To build the Karel library simply run make from the project's root folder via commandline/terminal:
-
+### Create server library for Praktomat
+The library can also be builded as a gui-less server library for the web application 'Praktomat'. The KarelLearnsC project has to be built on the target server in order to run properly.
+To build the Karel library simply run
 ```
-make 
+make linux_server
 ```
-
-After building the library the command
-```
-make praktomat
-```
-will copy the required library and header files into the needed location (usr/include)
+from the project's root folder via commandline/terminal.
+The command will also copy all relevant files into the usr/include/ folder from where it can be used from the praktomat scripts.
 
 ## TODO
 
