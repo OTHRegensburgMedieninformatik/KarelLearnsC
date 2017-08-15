@@ -131,7 +131,7 @@ ifeq ($(PLATFORM),Windows)
 	@cp -r src/mingw/SDL-1.2.15/lib build/$(PLATFORM)/
 else
 	@cp -r src/SdlUnix-1.2.15/include/ build/$(PLATFORM)/
-	@cp -r src/SdlUnix-1.2.15/lib64/ build/$(PLATFORM)/
+	@cp -r src/SdlUnix-1.2.15/lib/ build/$(PLATFORM)/
 endif
 
 clion_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
