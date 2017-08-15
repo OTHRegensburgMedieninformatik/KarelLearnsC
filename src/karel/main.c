@@ -37,8 +37,8 @@ void initializations() {
 	frameLimit = SDL_GetTicks() + 16;
 	setup();
 	//loadWorld("data/worlds/DiamondMining1.w");
-	//loadImages();
-    //prepareKarel();
+	loadImages();
+    prepareKarel();
 }
 
 void prepareKarel() {
