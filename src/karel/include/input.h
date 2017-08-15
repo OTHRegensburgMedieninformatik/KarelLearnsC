@@ -1,5 +1,5 @@
 #include "structs.h"
-#ifdef UNIX_BUILD
+#if BUILD == UNIX_BUILD
 #include <pthread.h>
 #endif
 

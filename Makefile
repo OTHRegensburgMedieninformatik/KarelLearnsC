@@ -8,12 +8,14 @@ ifeq ($(OS),Windows_NT)
 PLATFORM=windows
 SDL=src/mingw/SDL-1.2.15
 # Additional compiler flags
-CFLAGS=-std=gnu11 -w -g
-else
-PLATFORM=unixlike
+CFLAGS=-std=gnu11 -w -g -DBUILD=1
+else ifeq ($(OS),unix)
+PLATFORM=unix
 SDL=src/SdlUnix-1.2.15
 # Additional compiler flags
 CFLAGS=-std=gnu11 -w -g -pthread -DBUILD=2
+else
+PLATFORM=unixlike
 endif
 
 KAREL=src/karel
@@ -35,7 +37,7 @@ OBJECTS = \
 	build/$(PLATFORM)/obj/karel.o \
 	build/$(PLATFORM)/obj/main.o \
 	build/$(PLATFORM)/obj/world.o
-ifeq ($(PLATFORM),unixlike)
+ifeq ($(PLATFORM),unix)
 	OBJECTS += build/$(PLATFORM)/obj/itoa.o
 endif
 
@@ -100,7 +102,7 @@ build/$(PLATFORM)/obj/main.o:
 build/$(PLATFORM)/obj/world.o: 
 	@echo "Build world.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/world.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/world.c
-ifeq ($(PLATFORM),unixlike)
+ifeq ($(PLATFORM),unix)
 build/$(PLATFORM)/obj/itoa.o: 
 	@echo "Build itoa.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/itoa.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/itoa.c
@@ -129,7 +131,7 @@ copy:
 ifeq ($(PLATFORM),Windows)
 	@cp -r src/mingw/SDL-1.2.15/include build/$(PLATFORM)/
 	@cp -r src/mingw/SDL-1.2.15/lib build/$(PLATFORM)/
-else
+else ifeq($(PLATFORM),unix)
 	@cp -r src/SdlUnix-1.2.15/include/ build/$(PLATFORM)/
 	@cp -r src/SdlUnix-1.2.15/lib/ build/$(PLATFORM)/
 endif

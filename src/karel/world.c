@@ -6,7 +6,7 @@
 #include "draw.h"
 #endif // WINDOWS_BUILD
 
-#if BUILD == LINUX_BUILD
+#if BUILD == LINUX_BUILD || BUILD == UNIX_BUILD
 #include <stdio.h>
 #endif // LINUX_BUILD
 
@@ -341,7 +341,7 @@ void loadWorld(char *name)
         }
     }
     world.filename = name;
-    #if BUILD == WINDOWS_BUILD
+    #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
     loadImages();
     prepareKarel();
     #endif // WINDOWS_BUILD

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "karel.h"
-#if BUILD == LINUX_BUILD
+#if BUILD == LINUX_BUILD || BUILD == UNIX_BUILD
 #include <stdio.h>
 #endif // LINUX_BUILD
 
@@ -37,8 +37,8 @@ void initializations() {
 	frameLimit = SDL_GetTicks() + 16;
 	setup();
 	//loadWorld("data/worlds/DiamondMining1.w");
-	loadImages();
-    prepareKarel();
+	//loadImages();
+    //prepareKarel();
 }
 
 void prepareKarel() {

@@ -1,7 +1,7 @@
 #include "input.h"
-#ifndef UNIX_BUILD
+#if BUILD == WINDOWS_BUILD
 #include "windows.h"
-#else
+#elif BUILD == UNIX_BUILD
 #include <pthread.h>
 //to replace windows.h stuff
 typedef unsigned long DWORD;
@@ -76,7 +76,7 @@ void getInput() {
                         			//run();
 									#if BUILD == WINDOWS_BUILD
                         			runThread = CreateThread(Null, 0, runPointer, Null, 0, Null);
-									#else
+									#elif BUILD == UNIX_BUILD
 									pthread_create(runThread, Null, runPointer, Null);
 									#endif
                     			}
