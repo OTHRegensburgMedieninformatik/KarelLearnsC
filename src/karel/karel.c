@@ -1,12 +1,12 @@
 #include "karel.h"
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 #include "graphicsManager.h"
 #endif // WINDOWS_BUILD
 #if BUILD == LINUX_BUILD
 #include <stdio.h>
 #endif // LINUX_BUILD
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 SDL_Surface* rotatedKarel;
 void removeFromScreen();
 #endif // WINDOWS_BUILD
@@ -16,7 +16,7 @@ void initKarel()
     karel.x = world.karelStartX;
     karel.y = world.karelStartY;
 
-    #if BUILD == WINDOWS_BUILD
+    #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
     karel.width = karelRightImage->w;
     karel.height = karelRightImage->h;
     #endif // WINDOWS_BUILD
@@ -31,7 +31,7 @@ void move()
         {
             world.speed = 1;
         }
-       #if BUILD == WINDOWS_BUILD
+       #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
         int frameLimit = SDL_GetTicks() + DELAY / (world.speed * 2);
        #endif // WINDOWS_BUILD
         if (frontIsClear())
@@ -56,7 +56,7 @@ void move()
                 karel.x += 1;
                 break;
             }
-       #if BUILD == WINDOWS_BUILD
+       #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
             delay(frameLimit);
        #endif // WINDOWS_BUILD
         }
@@ -65,7 +65,7 @@ void move()
        karel.error = 1;
         }
     }
-       #if BUILD == WINDOWS_BUILD
+       #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
     draw();
        #endif // WINDOWS_BUILD
 }
@@ -78,7 +78,7 @@ void turnLeft()
         {
             world.speed = 1;
         }
-        #if BUILD == WINDOWS_BUILD
+        #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
             SDL_Delay(500/ (world.speed * 2));
         #endif // WINDOWS_BUILD
         if (world.angle == 360)
@@ -86,7 +86,7 @@ void turnLeft()
             world.angle = 0;
         }
         world.angle += A_LEFT_TURN;
-        #if BUILD == WINDOWS_BUILD
+        #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
             draw();
             SDL_Delay(500/ (world.speed * 2));
         #endif // WINDOWS_BUILD
@@ -178,13 +178,13 @@ void pickBeeper()
     {
         if (world.worldInformation[karel.x][karel.y].beeper)
         {
-            #if BUILD == WINDOWS_BUILD
+            #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
                 SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
             #endif // WINDOWS_BUILD
             world.beeperBag++;
             if (world.worldInformation[karel.x][karel.y].beeper >= INFINITE_BEEPERS)
                 return;
-            #if BUILD == WINDOWS_BUILD
+            #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
                 if ((--world.worldInformation[karel.x][karel.y].beeper) == 0)
                     removeFromScreen(ENTITY_BEEPER);
                 draw();
@@ -194,7 +194,7 @@ void pickBeeper()
         else
         {
             karel.error = 1;
-            #if BUILD == WINDOWS_BUILD
+            #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
                 draw();
             #endif // WINDOWS_BUILD
 
@@ -209,12 +209,12 @@ void putBeeper()
         if (world.beeperBag <= 0)
         {
             karel.error = 1;
-            #if BUILD == WINDOWS_BUILD
+            #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
                 draw();
             #endif // WINDOWS_BUILD
             return;
         }
-        #if BUILD == WINDOWS_BUILD
+        #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
             SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
         #endif // WINDOWS_BUILD
         if (world.beeperBag >= INFINITE_BEEPERS)
@@ -236,7 +236,7 @@ void putBeeper()
                 world.worldInformation[karel.x][karel.y].beeper += 1;
             }
         }
-        #if BUILD == WINDOWS_BUILD
+        #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
             draw();
             SDL_Delay(500/ ((world.speed == 0 ? 1 : world.speed) * 2));
         #endif // WINDOWS_BUILD
@@ -420,7 +420,7 @@ int leftIsBlocked()
 
 void drawError()
 {
-    #if BUILD == WINDOWS_BUILD
+    #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
     if(karel.error == 1)
     {
         drawErrorImage(errorImage, 0, 0);
@@ -428,7 +428,7 @@ void drawError()
     #endif // WINDOWS_BUILD
 }
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 void drawKarel()
 {
     if(karelIsInitiated())

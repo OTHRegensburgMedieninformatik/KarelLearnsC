@@ -2,7 +2,7 @@
 #define MAIN_H
 #include "structs.h"
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD ==UNIX_BUILD
 SDL_Surface *errorImage, *screen, *wallVerticalImage, *wallHorizontalImage, *karelRightImage, *karelLeftImage, *karelUpImage, *karelDownImage, *beeperImage;
 TTF_Font *font, *speedFont;
 Input input;
@@ -14,7 +14,7 @@ Karel karel, *self;
 
 void initKarel(void);
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 void init(char *);
 void cleanup(void);
 SDL_Surface *loadImage(char *, int);

@@ -13,7 +13,7 @@ else
 PLATFORM=unixlike
 SDL=src/SdlUnix-1.2.15
 # Additional compiler flags
-CFLAGS=-std=gnu11 -w -g -pthread
+CFLAGS=-std=gnu11 -w -g -pthread -DBUILD=2
 endif
 
 KAREL=src/karel

@@ -2,7 +2,7 @@
 #include "config.h"
 #include "structs.h"
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 #include "draw.h"
 #endif // WINDOWS_BUILD
 
@@ -10,7 +10,7 @@
 #include <stdio.h>
 #endif // LINUX_BUILD
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 extern void drawBeeperImage(SDL_Surface *, int, int, int);
 extern void drawPixelOnScreen(int positionX, int positionY, int entity,
                               int A_KAREL_STEP);
@@ -38,7 +38,7 @@ void loadWorld(char *name)
     int x, y;
 
     FILE *filePointer;
-    #if BUILD == WINDOWS_BUILD
+    #if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
     char *path = "data/worlds/";
     #endif // WINDOWS_BUILD
     #if BUILD == LINUX_BUILD
@@ -446,7 +446,7 @@ int karelForDirection(char singleLine[150], char *direction)
     return (strstr(singleLine, KAREL) && (strstr(singleLine, direction)));
 }
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 void drawWorld()
 {
     int row, column;

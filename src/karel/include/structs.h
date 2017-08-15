@@ -4,6 +4,9 @@
 #ifndef LINUX_BUILD
 #define LINUX_BUILD 1
 #endif // LINUX_BUILD
+#ifndef UNIX_BUILD
+#define UNIX_BUILD 2
+#endif // LINUX_BUILD
 #ifndef Null
 #define Null 0
 #endif // Null
@@ -42,7 +45,7 @@ typedef struct Karel
 	int error;
 } Karel;
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 typedef struct Cursor
 {
     int x, y, tileID;

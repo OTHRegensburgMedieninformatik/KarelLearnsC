@@ -22,7 +22,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <errno.h>
-#endif // WINDOWS_BUILD
+#endif
 #include <string.h>
 
 #define WALL "Wall"

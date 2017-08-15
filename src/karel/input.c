@@ -74,7 +74,11 @@ void getInput() {
                     			if (isStarted == 0)
                     			{
                         			//run();
+									#if BUILD == WINDOWS_BUILD
                         			runThread = CreateThread(Null, 0, runPointer, Null, 0, Null);
+									#else
+									pthread_create(runThread, Null, runPointer, Null);
+									#endif
                     			}
 
 					//isStarted = 1;

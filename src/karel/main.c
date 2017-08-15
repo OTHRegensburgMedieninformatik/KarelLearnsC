@@ -4,7 +4,7 @@
 #include <stdio.h>
 #endif // LINUX_BUILD
 
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 int cleanUp(int err);
 int karelIsInitiated();
 void prepareKarel(void);

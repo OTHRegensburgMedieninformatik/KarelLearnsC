@@ -2,13 +2,13 @@
 #define KAREL_H
 #include "structs.h"
 #include "world.h"
-#if BUILD == LINUX_BUILD
+#if BUILD == LINUX_BUILD || BUILD == UNIX_BUILD
 #include <stdio.h>
 #endif // LINUX_BUILD
 
 extern Karel karel;
 extern World world;
-#if BUILD == WINDOWS_BUILD
+#if BUILD == WINDOWS_BUILD || BUILD == UNIX_BUILD
 extern SDL_Surface *errorImage, *karelRightImage, *karelLeftImage, *karelUpImage, *karelDownImage, *beeperImage;
 void drawKarel(void);
 #endif // WINDOWS_BUILD
