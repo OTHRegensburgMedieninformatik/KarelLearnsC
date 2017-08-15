@@ -1,5 +1,14 @@
 #include "input.h"
+#ifndef UNIX_BUILD
 #include "windows.h"
+#else
+#include <pthread.h>
+//to replace windows.h stuff
+typedef unsigned long DWORD;
+#define WINAPI
+typedef void * HANDLE;
+#endif
+
 
 extern void load();
 

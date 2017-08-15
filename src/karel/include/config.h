@@ -7,11 +7,20 @@
 #ifndef Null
 #define Null 0
 #endif // Null
+#ifndef UNIX_BUILD
+#define UNIX_BUILD 2
+#endif
 
 #if BUILD == WINDOWS_BUILD
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include <errno.h>
+#endif // WINDOWS_BUILD
+#if BUILD == UNIX_BUILD
+#include <SDL/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <errno.h>
 #endif // WINDOWS_BUILD
 #include <string.h>

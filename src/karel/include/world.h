@@ -2,6 +2,9 @@
 #if BUILD == LINUX_BUILD
 #include <stdio.h>
 #endif // LINUX_BUILD
+#ifdef UNIX_BUILD
+#include "itoa.h"
+#endif
 
 extern World world;
 extern WorldInformation worldInformation;

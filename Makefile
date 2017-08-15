@@ -6,15 +6,17 @@ SHELL=/bin/bash
 # Valid values for variable platform are unixlike and windows
 ifeq ($(OS),Windows_NT)
 PLATFORM=windows
+SDL=src/mingw/SDL-1.2.15
+# Additional compiler flags
+CFLAGS=-std=gnu11 -w -g
 else
 PLATFORM=unixlike
+SDL=src/SdlUnix-1.2.15
+# Additional compiler flags
+CFLAGS=-std=gnu11 -w -g -pthread
 endif
 
 KAREL=src/karel
-SDL=src/mingw/SDL-1.2.15
-
-# Additional compiler flags
-CFLAGS=-std=gnu11 -w -g
 
 
 BUILD = \
@@ -33,6 +35,9 @@ OBJECTS = \
 	build/$(PLATFORM)/obj/karel.o \
 	build/$(PLATFORM)/obj/main.o \
 	build/$(PLATFORM)/obj/world.o
+ifeq ($(PLATFORM),unixlike)
+	OBJECTS += build/$(PLATFORM)/obj/itoa.o
+endif
 
 SERVEROBJECTS = \
 	build/$(PLATFORM)/obj/karel.o \
@@ -81,7 +86,7 @@ build/$(PLATFORM)/obj/init.o:
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/init.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/init.c
 
 build/$(PLATFORM)/obj/input.o: 
-	@echo "Build init.o"
+	@echo "Build input.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/input.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/input.c
 
 build/$(PLATFORM)/obj/karel.o: 
@@ -95,6 +100,12 @@ build/$(PLATFORM)/obj/main.o:
 build/$(PLATFORM)/obj/world.o: 
 	@echo "Build world.o"
 	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/world.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/world.c
+ifeq ($(PLATFORM),unixlike)
+build/$(PLATFORM)/obj/itoa.o: 
+	@echo "Build itoa.o"
+	@gcc $(CFLAGS) -c -o build/$(PLATFORM)/obj/itoa.o -I$(SDL)/include -I$(KAREL)/include $(KAREL)/itoa.c
+endif
+
 
 #build/$(PLATFORM)/obj/exception.o: c/src/exception.c c/include/cslib.h \
 #                 c/include/exception.h c/include/strlib.h \
@@ -113,10 +124,15 @@ build/$(PLATFORM)/lib/libKarel.a: $(OBJECTS)
 copy:
 	@echo "Copy static files, header and libs"
 	@cp -r src/karel/include build/$(PLATFORM)/
-	@cp -r src/mingw/SDL-1.2.15/include build/$(PLATFORM)/
-	@cp -r src/mingw/SDL-1.2.15/lib build/$(PLATFORM)/
 	@cp -r src/karel/assets build/$(PLATFORM)/
 	@cp -r src/karel/data build/$(PLATFORM)/
+ifeq ($(PLATFORM),Windows)
+	@cp -r src/mingw/SDL-1.2.15/include build/$(PLATFORM)/
+	@cp -r src/mingw/SDL-1.2.15/lib build/$(PLATFORM)/
+else
+	@cp -r src/SdlUnix-1.2.15/include/ build/$(PLATFORM)/
+	@cp -r src/SdlUnix-1.2.15/lib64/ build/$(PLATFORM)/
+endif
 
 clion_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@echo "Build StarterProject for Clion on Windows"
@@ -137,6 +153,27 @@ codeblocks_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@cp -r build/$(PLATFORM)/assets StarterProject/assets
 	@cp -r build/$(PLATFORM)/data StarterProject/data
 	@echo "Check the StarterProject folder"
+
+clion_unix: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
+	@echo "Build StarterProject for Clion on Windows"
+	@rm -rf StarterProject
+	@cp -r ide/clion/unix StarterProject
+	@cp -r build/$(PLATFORM)/include StarterProject/include
+	@cp -r build/$(PLATFORM)/lib StarterProject/lib
+	@cp -r build/$(PLATFORM)/assets StarterProject/assets
+	@cp -r build/$(PLATFORM)/data StarterProject/data
+	@echo "Check the StarterProject folder"
+
+codeblocks_unix: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
+	@echo "Build StarterProject for CodeBlocks on unix";
+	@rm -rf StarterProject
+	@cp -r ide/codeblocks/unix StarterProject
+	@cp -r build/$(PLATFORM)/include StarterProject/include
+	@cp -r build/$(PLATFORM)/lib StarterProject/lib
+	@cp -r build/$(PLATFORM)/assets StarterProject/assets
+	@cp -r build/$(PLATFORM)/data StarterProject/data
+	@echo "Check the StarterProject folder"
+
 
 linux_server:
 	@echo "Build Directories"
