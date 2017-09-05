@@ -157,7 +157,7 @@ codeblocks_windows: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
 	@echo "Check the StarterProject folder"
 
 clion_unix: clean $(BUILD) $(OBJECTS) $(LIBRARIES) copy
-	@echo "Build StarterProject for Clion on Windows"
+	@echo "Build StarterProject for Clion on Unix"
 	@rm -rf StarterProject
 	@cp -r ide/clion/unix StarterProject
 	@cp -r build/$(PLATFORM)/include StarterProject/include
