@@ -19,8 +19,8 @@
 #endif // WINDOWS_BUILD
 #if BUILD == UNIX_BUILD
 #include <SDL/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 #include <errno.h>
 #endif
 #include <string.h>

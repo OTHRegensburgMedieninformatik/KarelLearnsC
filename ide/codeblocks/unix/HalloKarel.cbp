@@ -23,6 +23,7 @@
 					<Add library="lib/libSDL.so" />
 					<Add library="lib/libSDL_ttf.so" />
 					<Add library="lib/libSDL_image.so" />
+					<Add directory="lib" />
 				</Linker>
 			</Target>
 		</Build>
