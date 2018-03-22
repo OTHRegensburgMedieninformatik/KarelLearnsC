@@ -10,40 +10,39 @@
 * 1.0
 * Note: This is a very first rough and sketchy draft of the documentation
 
-
-### How do I get set up (Windows only!)? ###
-To build the Karel Library simply run make from the project's root folder:
-
-```
-make 
-```
-
->The generated files are stored in the build directory
+### Preconditions to create starter projects
+#### Unix (testet with ubuntu-16.04)
++ make
++ gcc
++ g++
+Sometimes (depands on scope of os installation)
++ libsdl1.2-dev
++ libsdl-image1.2-dev
 
 ### Create starter projects for IDEs
 The library comes with preconfigured starter projects for Clion and Codeblocks. These projects include the compiled library as well as a starter hello world file that can be compiled and linked against the library. Everything should already be set up correctly. Simple open the starter project with the respective IDE and hit compile and run.
 
 >Hint Clion needed as separated build script. It is located in the StarterProject folder. 
->Please run "build.bat" befor you open it in Clion
+>Please run "build.bat" or "build.sh" befor you open it in Clion
 
 The starter projects can be created with one of the following commands
 
 >IDE = [ "clion", "codeblocks"] \
->PLATFORM = ["windows"] 
+>PLATFORM = ["windows", "unix"] 
 >
->make IDE_PLATFORM
+>make IDE_PLATFORM OS=PLATFORM
 
 So
 ```
-make clion_windows
+make clion_windows OS=windows
 ```
 creates the starter project for Clion under Windows in the folder StartProject.
 
-Additionally all starter projects can be built at once with
+other possibilitys are:
++ make code_blocks_windows OS=windows
++ make codeblocks_unix OS=unix
++ make clion_unix OS=unix
 
-```
- make starterprojects
-```
 
 ### Create server library for Praktomat
 The library can also be builded as a gui-less server library for the web application 'Praktomat'. The KarelLearnsC project has to be built on the target server in order to run properly.
