@@ -151,6 +151,7 @@ void drawBeeperCounter() {
     {
         temp[0] = 'o';
         temp[1] = 'o';
+        temp[2] = '\0';
     }
 
     char dest[20];
