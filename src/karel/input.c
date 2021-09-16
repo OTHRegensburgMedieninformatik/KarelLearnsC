@@ -6,7 +6,7 @@
 //to replace windows.h stuff
 typedef unsigned long DWORD;
 #define WINAPI
-typedef void * HANDLE;
+typedef pthread_t HANDLE;
 #endif
 
 
@@ -74,11 +74,11 @@ void getInput() {
                     			if (isStarted == 0)
                     			{
                         			//run();
-									#if BUILD == WINDOWS_BUILD
-                        			runThread = CreateThread(Null, 0, runPointer, Null, 0, Null);
-									#elif BUILD == UNIX_BUILD
-									pthread_create(runThread, Null, runPointer, Null);
-									#endif
+						#if BUILD == WINDOWS_BUILD
+							runThread = CreateThread(Null, 0, runPointer, Null, 0, Null);
+						#elif BUILD == UNIX_BUILD
+							pthread_create(&runThread, Null, runPointer, Null);
+						#endif
                     			}
 
 					//isStarted = 1;
