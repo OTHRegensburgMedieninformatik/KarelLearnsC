@@ -142,7 +142,6 @@ void drawMenu() {
 
 
 void drawBeeperCounter() {
-	char* beeperCounter = "Beeper(s) in Bag: ";
 	char temp[10];
 
 	if (world.beeperBag < INFINITE_BEEPERS)
@@ -154,10 +153,8 @@ void drawBeeperCounter() {
         temp[2] = '\0';
     }
 
-    char dest[20];
-
-    strcpy( dest, beeperCounter );
-    strcat( dest, temp );
+    char dest[30];
+	snprintf(dest, sizeof(dest), "Beeper(s) in Bag: %s", temp);
 
 	drawString(dest, world.speedMinusButtonX, 6 * TILE_SIZE, font, 0, 0, 0);
 }

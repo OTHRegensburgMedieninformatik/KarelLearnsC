@@ -151,12 +151,11 @@ void drawBeeperCounter() {
     {
         temp[0] = 'o';
         temp[1] = 'o';
+        temp[2] = '\0';
     }
 
-    char dest[20];
-
-    strcpy( dest, beeperCounter );
-    strcat( dest, temp );
+    char dest[30];
+	snprintf(dest, sizeof(dest), "Beeper(s) in Bag: %s", temp);
 
 	drawString(dest, world.speedMinusButtonX, 6 * TILE_SIZE, font, 0, 0, 0);
 }
